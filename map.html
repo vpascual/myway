@@ -4,8 +4,6 @@
 	<title>La ruta</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/d3.js" type="text/javascript" charset="utf-8"></script>			
-  <script type='text/javascript' src='js/jquery.tipsy.js'></script>
-  <link rel="stylesheet" href="css/tipsy.css" type="text/css" />
 
 	<!-- <script src="us-pres.json" type="text/javascript" charset="utf-8"></script> -->
 	
@@ -417,14 +415,7 @@ var tooltip = d3.select("body")
 
 
 var state = d3.selectAll('path').attr('fill', function (d){
-    /*for (var i=0; i<myCountries.length; i++) {
-      if (this.id == myCountries[i])
-        return "#568bdb";
-    }*/
-
     return "#568bdb";
-		//return "white";
-
 }
 );
 
@@ -439,6 +430,7 @@ var state = d3.selectAll('path').attr('stroke', function (d){
 
 }
 );*/
+
 
 var state = d3.selectAll('path').attr('fill-opacity', function (d){
   var countryName = getCountryNameFromId(this.id);
@@ -467,12 +459,12 @@ var region = d3.selectAll("path")
     
     if (index > -1) {   
       var name = this.id;
-      var index = name.indexOf(":");
-
-      finalName = getCountryNameFromId(name);
+      finalName = countryName;
 
       tooltip.text(finalName);
       tooltip.style("visibility", "visible");
+      console.log("D: " + d3.select(this).attr('fill-opacity', 1));
+      controlVisibility();
     }
   })
   .on("mousemove", function(){
@@ -481,10 +473,28 @@ var region = d3.selectAll("path")
   })
   .on("mouseout", function(){
       tooltip.style("visibility", "hidden");
+      finalName = "";
+      controlVisibility(null);
     })
   .on("click", function(d,i) {
     window.open("http://myway.vpascual.org/category/" + finalName.toLowerCase());
   });
+
+  function controlVisibility() {
+    d3.selectAll('path').attr('fill-opacity', function (d){
+      var countryName = getCountryNameFromId(this.id);
+      var index = $.inArray(countryName, myCountries);
+      console.log("this.id: " + this.id);
+      if (index == -1)         
+          return 0.2;
+      else {
+        if (finalName == getCountryNameFromId(this.id) || finalName == "")
+          return 1;
+        else
+          return 0.4;
+      }
+    });
+  }
 
 </script>
 </body>
