@@ -409,8 +409,9 @@ var myCountries = ["sweden", "australia: tasmania", "japan", "australia", "vietn
                   "thailand", "laos", "cambodia", "new zealand", "malaysia", "fiji", "indonesia",
                   "philippines"];
 
-var hola = d3.selectAll("#viewport").call(d3.behavior.zoom().on('zoom', redraw));
-console.log(hola);
+d3.selectAll("#viewport")
+  .call(d3.behavior.zoom().on('zoom', redraw));
+
 
 function redraw() {
     d3.select("#viewport").attr("transform",
