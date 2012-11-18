@@ -493,7 +493,7 @@ var region = d3.selectAll("path")
       this.style.cursor = "auto";
     })
   .on("click", function(d,i) {
-    window.open("http://myway.vpascual.org/category/" + finalName.toLowerCase());
+    window.open("http://myway.vpascual.org/category/" + finalName.toLowerCase().replace(/\s+/g, ''));
   });
 
   function controlVisibility() {
